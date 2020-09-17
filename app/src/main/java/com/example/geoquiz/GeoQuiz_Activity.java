@@ -1,9 +1,11 @@
 package com.example.geoquiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class GeoQuiz_Activity<str> extends AppCompatActivity {
+         public static final String CURRENTINDEX = "currentindex";
+         public static final String IS_ANSWER = "isAnswer";
+         public static final String SCORE = "score";
          public Button btn_true ;
          public Button btn_false;
          public ImageButton btn_next;
@@ -28,6 +33,8 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
          public String str;
          public ImageButton  btnreset;
          LinearLayout linearLayout;
+         LinearLayout linearLayoutpre;
+         LinearLayout linearLayoutnext;
          Question [] mquestion = {
                  new Question(R.string.question_australia,false),
                  new Question(R.string.question_oceans,true),
@@ -41,16 +48,29 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.geoquiz);
+        if(savedInstanceState != null){
+            mcurrentindex = savedInstanceState.getInt(CURRENTINDEX,0);
+            score = savedInstanceState.getInt(SCORE,0);
+            isAnswer = savedInstanceState.getBooleanArray(IS_ANSWER);
+        }
 
+        setContentView(R.layout.geoquiz);
         findview();
         setListener();
         setquestion();
-        setScore("امتیاز : 0");
+        makestr();
+        setScore(str);
+        setVisibility();
     }
 
 
-
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENTINDEX,mcurrentindex);
+        outState.putInt(SCORE,score);
+        outState.putBooleanArray(IS_ANSWER,isAnswer);
+    }
 
     private void setVisibility(){
         boolean flag = false;
@@ -60,9 +80,9 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
             }
         }
         if(flag == false){
-
-
-           linearLayout.setVisibility(LinearLayout.GONE);
+            linearLayout.setVisibility(LinearLayout.GONE);
+           linearLayoutnext.setVisibility(LinearLayout.GONE);
+           linearLayoutpre.setVisibility(LinearLayout.GONE);
            btnreset.setVisibility(findViewById(R.id.btn_reset).VISIBLE);
         }
 
@@ -74,8 +94,8 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
     }
 
     private void setquestion() {
-           btnreset.setVisibility(findViewById(R.id.btn_reset).INVISIBLE);
-        setVisibility();
+        btnreset.setVisibility(findViewById(R.id.btn_reset).INVISIBLE);
+
         int questionId = mquestion[mcurrentindex].getmQuestiontextResId();
 
         if(isAnswer[mcurrentindex] == false){
@@ -162,13 +182,15 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
             public void onClick(View v) {
 
                linearLayout.setVisibility(LinearLayout.VISIBLE);
-
+               linearLayoutnext.setVisibility(LinearLayout.VISIBLE);
+               linearLayoutpre.setVisibility(LinearLayout.VISIBLE);
                 for (int i = 0; i <isAnswer.length ; i++) {
                     isAnswer[i] = false;
                 }
                 setquestion();
                 score = 0;
-                setScore("امتیاز : 0");
+                makestr();
+                setScore(str);
             }
         });
 
@@ -185,6 +207,8 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
         btn_score = findViewById(R.id.btn_score);
         btnreset = findViewById(R.id.btn_reset);
        linearLayout = (LinearLayout)this.findViewById(R.id.hideUI);
+       linearLayoutpre =(LinearLayout)this.findViewById(R.id.pre_layout);
+        linearLayoutnext =(LinearLayout)this.findViewById(R.id.next_layout);
     }
 
 
@@ -202,8 +226,7 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
 
         if(mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed){
             score ++ ;
-            scorestr = String.valueOf(score);
-            str = "امتیاز: " + scorestr;
+            makestr();
             textViewtrue.setText(R.string.true_message);
             textViewtrue.setTextColor(Color.GREEN);
             toasttrue.setDuration(Toast.LENGTH_SHORT);
@@ -215,9 +238,9 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
             toasttrue.show();
             isAnswer[mcurrentindex] = true;
              disableButton();
+             setVisibility();
         }else{
-            scorestr = String.valueOf(score);
-            str = "امتیاز: " + scorestr;
+            makestr();
             textViewfalse.setText(R.string.false_message);
             textViewfalse.setTextColor(Color.RED);
             toastfalse.setDuration(Toast.LENGTH_SHORT);
@@ -230,12 +253,16 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
             toastfalse.show();
             isAnswer[mcurrentindex] = true;
             disableButton();
+            setVisibility();
         }
 
 
     }
 
-
+    private void makestr() {
+        scorestr = String.valueOf(score);
+        str = "امتیاز: " + scorestr;
+    }
 
 
 }
