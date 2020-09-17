@@ -11,78 +11,85 @@
     tools:context=".GeoQuiz_Activity">
 
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        >
-        <Button
-            android:id="@+id/btn_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/score" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/txt_questiom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="20dp" />
+        android:layout_gravity="center|top"
+        tools:text="@string/score" />
 
     <LinearLayout
+        android:id="@+id/hideUI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_false"
+        <TextView
+            android:id="@+id/txt_questiom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_false" />
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/btn_true"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_true" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/str_false" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/str_true" />
 
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btn_doublenext"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/double_leftarroeic"
-            tools:src="@drawable/double_leftarroeic" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_leftarrow"
-            tools:src="@drawable/ic_leftarrow" />
 
-        <ImageButton
-            android:id="@+id/btn_pre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_rigtarrow"
-            tools:src="@drawable/ic_rigtarrow" />
+            <ImageButton
+                android:id="@+id/btn_doublenext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/double_leftarroeic"
+                tools:src="@drawable/double_leftarroeic" />
 
-        <ImageButton
-            android:id="@+id/btn_doublepre"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/double_rightarrowic"
-            tools:src="@drawable/double_rightarrowic" />
+            <ImageButton
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_leftarrow"
+                tools:src="@drawable/ic_leftarrow" />
+
+            <ImageButton
+                android:id="@+id/btn_pre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_rigtarrow"
+                tools:src="@drawable/ic_rigtarrow" />
+
+            <ImageButton
+                android:id="@+id/btn_doublepre"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/double_rightarrowic"
+                tools:src="@drawable/double_rightarrowic" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <ImageButton

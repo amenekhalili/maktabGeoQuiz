@@ -26,8 +26,8 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
          public Button btn_score ;
          public String scorestr;
          public String str;
-         public int count = 0;
          public ImageButton  btnreset;
+         LinearLayout linearLayout;
          Question [] mquestion = {
                  new Question(R.string.question_australia,false),
                  new Question(R.string.question_oceans,true),
@@ -52,8 +52,7 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
 
 
 
-    private void setVisibility(View viewtextQuestion,View viewbtnfalse,View viewbtntrue,
-                               View viewbtnlast,View viewbtnfirst , View viewbtnnext , View viewbtnpre , View viewbtnreset,View viewbtnscore){
+    private void setVisibility(){
         boolean flag = false;
         for (int i = 0; i <isAnswer.length ; i++) {
             if(isAnswer[i] == false){
@@ -62,15 +61,9 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
         }
         if(flag == false){
 
-            mtextviewQuestion.setVisibility(viewtextQuestion.INVISIBLE);
-            btn_false.setVisibility(viewbtnfalse.INVISIBLE);
-            btn_true.setVisibility(viewbtntrue.INVISIBLE);
-            btn_doublenext.setVisibility(viewbtnlast.INVISIBLE);
-            btn_doublepre.setVisibility(viewbtnfirst.INVISIBLE);
-            btn_next.setVisibility(viewbtnnext.INVISIBLE);
-            btn_pre.setVisibility(viewbtnpre.INVISIBLE);
-            btnreset.setVisibility(viewbtnreset.VISIBLE);
-            btn_score.setGravity(Gravity.CENTER);
+
+           linearLayout.setVisibility(LinearLayout.GONE);
+           btnreset.setVisibility(findViewById(R.id.btn_reset).VISIBLE);
         }
 
     }
@@ -82,7 +75,7 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
 
     private void setquestion() {
            btnreset.setVisibility(findViewById(R.id.btn_reset).INVISIBLE);
-        setVisibility(mtextviewQuestion , btn_false,btn_true,btn_doublenext,btn_doublepre,btn_next,btn_pre , btnreset , btn_score);
+        setVisibility();
         int questionId = mquestion[mcurrentindex].getmQuestiontextResId();
 
         if(isAnswer[mcurrentindex] == false){
@@ -167,13 +160,8 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
         btnreset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mtextviewQuestion.setVisibility(findViewById(R.id.txt_questiom).VISIBLE);
-                btn_false.setVisibility(findViewById(R.id.btn_false).VISIBLE);
-                btn_true.setVisibility(findViewById(R.id.btn_true).VISIBLE);
-                btn_doublenext.setVisibility(findViewById(R.id.btn_doublenext).VISIBLE);
-                btn_doublepre.setVisibility(findViewById(R.id.btn_doublepre).VISIBLE);
-                btn_next.setVisibility(findViewById(R.id.btn_next).VISIBLE);
-                btn_pre.setVisibility(findViewById(R.id.btn_pre).VISIBLE);
+
+               linearLayout.setVisibility(LinearLayout.VISIBLE);
 
                 for (int i = 0; i <isAnswer.length ; i++) {
                     isAnswer[i] = false;
@@ -196,6 +184,7 @@ public class GeoQuiz_Activity<str> extends AppCompatActivity {
         mtextviewQuestion = findViewById(R.id.txt_questiom);
         btn_score = findViewById(R.id.btn_score);
         btnreset = findViewById(R.id.btn_reset);
+       linearLayout = (LinearLayout)this.findViewById(R.id.hideUI);
     }
 
 
