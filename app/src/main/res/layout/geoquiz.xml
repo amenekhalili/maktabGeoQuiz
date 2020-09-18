@@ -73,15 +73,13 @@
                 android:id="@+id/btn_doublenext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/double_leftarroeic"
-                tools:src="@drawable/double_leftarroeic" />
+                android:src="@drawable/ic_double_left_angle_arrows" />
 
             <ImageButton
                 android:id="@+id/btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_leftarrow"
-                tools:src="@drawable/ic_leftarrow" />
+                android:src="@drawable/ic_left_arrow" />
 
             <LinearLayout
                 android:id="@+id/pre_layout"
@@ -93,15 +91,13 @@
                     android:id="@+id/btn_pre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_rigtarrow"
-                    tools:src="@drawable/ic_rigtarrow" />
+                    android:src="@drawable/ic_right_arrow" />
 
                 <ImageButton
                     android:id="@+id/btn_doublepre"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/double_rightarrowic"
-                    tools:src="@drawable/double_rightarrowic" />
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fast_forward_double_right_arrows" />
 
             </LinearLayout>
 
@@ -112,7 +108,6 @@
         android:id="@+id/btn_reset"
         android:layout_width="59dp"
         android:layout_height="71dp"
-        android:src="@drawable/reset"
-        tools:src="@drawable/reset" />
+        android:src="@drawable/ic_double_rotating_arrows" />
 
 </LinearLayout>
