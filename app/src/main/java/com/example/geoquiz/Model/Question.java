@@ -1,4 +1,6 @@
-package com.example.geoquiz;
+package com.example.geoquiz.Model;
+
+import androidx.core.app.ComponentActivity;
 
 public class Question {
     private int mQuestiontextResId;
