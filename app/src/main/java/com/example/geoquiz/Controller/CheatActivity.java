@@ -11,16 +11,21 @@ import android.widget.TextView;
 import com.example.geoquiz.R;
 
 public class CheatActivity extends AppCompatActivity {
+
     public static final String EXTRA_IS_CHEAT = "com.example.geoquizischeat.ischeat";
+    public static final String EXTRA_MCURRENTINDEX = "com.example.geoquizischeat.currentindex";
     private Button mbtn_showcheat;
-private TextView mtxtview_Answer;
-private boolean mIsanswertrue;
+    private TextView mtxtview_Answer;
+    private boolean mIsanswertrue;
+    int [] mcurrentindex = {10,10,10,10,10,10};
+     int mcurrent = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat);
 
-         mIsanswertrue = getIntent().getBooleanExtra(GeoQuiz_Activity.EXTRA_QUESTION_A_NSWER,false);
+        mIsanswertrue = getIntent().getBooleanExtra(GeoQuiz_Activity.EXTRA_QUESTION_A_NSWER, false);
+        mcurrentindex[mcurrent] = getIntent().getIntExtra(GeoQuiz_Activity.EXTRA_MCURRENTINDEX,10);
 
         findView();
         setlistener();
@@ -29,24 +34,25 @@ private boolean mIsanswertrue;
 
     private void setlistener() {
         mbtn_showcheat.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              if(mIsanswertrue)
-                  mtxtview_Answer.setText(R.string.str_true);
-              else
-                  mtxtview_Answer.setText(R.string.str_false);
+            @Override
+            public void onClick(View v) {
+                if (mIsanswertrue)
+                    mtxtview_Answer.setText(R.string.str_true);
+                else
+                    mtxtview_Answer.setText(R.string.str_false);
 
 
-       setshowmAnswerResult(true);
+                setshowmAnswerResult(true , mcurrentindex[mcurrent]);
 
-          }
-      });
+            }
+        });
     }
 
-    private void setshowmAnswerResult(boolean ischeat) {
+    private void setshowmAnswerResult(boolean ischeat , int mcurrentindex) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_IS_CHEAT,ischeat);
-        setResult(RESULT_OK,intent);
+        intent.putExtra(EXTRA_IS_CHEAT, ischeat);
+        intent.putExtra(EXTRA_MCURRENTINDEX , mcurrentindex);
+        setResult(RESULT_OK, intent);
     }
 
     private void findView() {
