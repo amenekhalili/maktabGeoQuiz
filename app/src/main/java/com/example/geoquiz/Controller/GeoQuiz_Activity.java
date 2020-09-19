@@ -1,9 +1,11 @@
 package com.example.geoquiz.Controller;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public class GeoQuiz_Activity extends AppCompatActivity {
          public static final String IS_ANSWER = "isAnswer";
          public static final String SCORE = "score";
     public static final String EXTRA_QUESTION_A_NSWER = " com.example.geoquiz.Question_Answer";
+    public static final int REQUEST_CODE_CHEAT = 0;
     public Button btn_true ;
          public Button btn_false;
          public ImageButton btn_next;
@@ -39,6 +42,7 @@ public class GeoQuiz_Activity extends AppCompatActivity {
          public String scorestr;
          public String str;
          public ImageButton  btnreset;
+         private boolean mIscheater;
          LinearLayout linearLayout;
          LinearLayout linearLayoutpre;
          LinearLayout linearLayoutnext;
@@ -70,6 +74,17 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         setVisibility();
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != Activity.RESULT_OK || data == null )
+            return;
+
+        if(requestCode == REQUEST_CODE_CHEAT){
+            mIscheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT,false);
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -207,9 +222,7 @@ public class GeoQuiz_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GeoQuiz_Activity.this , CheatActivity.class);
                 intent.putExtra(EXTRA_QUESTION_A_NSWER,mquestion[mcurrentindex].ismIsAnswerTrue());
-                startActivity(intent);
-
-
+              startActivityForResult(intent, REQUEST_CODE_CHEAT);
             }
         });
     }
@@ -243,7 +256,23 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         final Toast toastfalse= new Toast(getApplicationContext());
         final ImageView imageViewfalse = new ImageView(this);
 
-        if(mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed){
+        if(mIscheater){
+            Toast.makeText(this, R.string.judgment, Toast.LENGTH_SHORT).show();
+            isAnswer[mcurrentindex] = true;
+            disableButton();
+            setVisibility();
+            if(mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed ){
+                score++;
+                makestr();
+            }else {
+                makestr();
+            }
+
+
+        }
+
+        else{
+            if(mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed){
             score ++ ;
             makestr();
             textViewtrue.setText(R.string.true_message);
@@ -256,8 +285,8 @@ public class GeoQuiz_Activity extends AppCompatActivity {
             toasttrue.setView(layouttrue);
             toasttrue.show();
             isAnswer[mcurrentindex] = true;
-             disableButton();
-             setVisibility();
+            disableButton();
+            setVisibility();
         }else{
             makestr();
             textViewfalse.setText(R.string.false_message);
@@ -273,7 +302,10 @@ public class GeoQuiz_Activity extends AppCompatActivity {
             isAnswer[mcurrentindex] = true;
             disableButton();
             setVisibility();
-        }
+        }}
+
+
+
 
 
     }

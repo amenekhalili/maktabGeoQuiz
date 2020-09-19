@@ -2,6 +2,7 @@ package com.example.geoquiz.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,8 @@ import android.widget.TextView;
 import com.example.geoquiz.R;
 
 public class CheatActivity extends AppCompatActivity {
-private Button mbtn_showcheat;
+    public static final String EXTRA_IS_CHEAT = "com.example.geoquizischeat.ischeat";
+    private Button mbtn_showcheat;
 private TextView mtxtview_Answer;
 private boolean mIsanswertrue;
     @Override
@@ -33,8 +35,18 @@ private boolean mIsanswertrue;
                   mtxtview_Answer.setText(R.string.str_true);
               else
                   mtxtview_Answer.setText(R.string.str_false);
+
+
+       setshowmAnswerResult(true);
+
           }
       });
+    }
+
+    private void setshowmAnswerResult(boolean ischeat) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_IS_CHEAT,ischeat);
+        setResult(RESULT_OK,intent);
     }
 
     private void findView() {
