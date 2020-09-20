@@ -16,4 +16,9 @@
     <string name="show_cheat">نمایش تقلب</string>
     <string name="cheat_question">آیا برای تقلب مطمئنید؟</string>
     <string name="judgment">تقلب کار بدی است</string>
+    <string name="btn_setting">"تنظیمات   "</string>
+    <string name="change_question_size">تغییر سایز سوال ها</string>
+    <string name="small_size">14sp</string>
+    <string name="medium_size">18sp</string>
+    <string name="large_size">26sp</string>
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp">
+
+    <Button
+        android:id="@+id/btn_changesizequestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:text="@string/change_question_size" />
+
+    <LinearLayout
+        android:id="@+id/changequestion_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_smallsize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/small_size" />
+
+        <Button
+            android:id="@+id/btn_mediumsize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/medium_size" />
+
+        <Button
+            android:id="@+id/btn_largsize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/large_size" />
+    </LinearLayout>
+</FrameLayout>

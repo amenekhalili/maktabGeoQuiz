@@ -1,5 +1,6 @@
 package com.example.geoquiz.Controller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,6 +15,9 @@ public class CheatActivity extends AppCompatActivity {
 
     public static final String EXTRA_IS_CHEAT = "com.example.geoquizischeat.ischeat";
     public static final String EXTRA_MCURRENTINDEX = "com.example.geoquizischeat.currentindex";
+    public static final String M_IS_ANSWERTRUE = "mIsAnswertrue";
+    public static final String MCURRENTINDEX = "mcurrentindex";
+
     private Button mbtn_showcheat;
     private TextView mtxtview_Answer;
     private boolean mIsanswertrue;
@@ -22,14 +26,28 @@ public class CheatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            mIsanswertrue = savedInstanceState.getBoolean(M_IS_ANSWERTRUE);
+
+        }
         setContentView(R.layout.activity_cheat);
+
 
         mIsanswertrue = getIntent().getBooleanExtra(GeoQuiz_Activity.EXTRA_QUESTION_A_NSWER, false);
         mcurrentindex[mcurrent] = getIntent().getIntExtra(GeoQuiz_Activity.EXTRA_MCURRENTINDEX,10);
 
+
+
         findView();
         setlistener();
 
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+       outState.putBoolean(M_IS_ANSWERTRUE, mIsanswertrue);
     }
 
     private void setlistener() {

@@ -25,6 +25,12 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     public static final String EXTRA_QUESTION_A_NSWER = " com.example.geoquiz.Question_Answer";
     private static final int REQUEST_CODE_CHEAT = 0;
     public static final String EXTRA_MCURRENTINDEX = "com.example.geoquiz.mcurrentindex";
+    public static final String M_IS_CHEATER = "mIsCheater";
+    public static final String INDEXCHEATER = "indexcheater";
+    public static final int REQUEST_CODE_SETTING = 1;
+    public static final String SMALL_SIZE = "small_size";
+    public static final String MEDIUM_SIZE = "medium_size";
+    public static final String LARGE_SIZE = "large_size";
     private Button btn_true;
     private Button btn_false;
     private ImageButton btn_next;
@@ -41,9 +47,13 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     private ImageButton btnreset;
     private boolean mIscheater;
     private int indexcheater;
+    private Button btn_setting;
     LinearLayout linearLayout;
     LinearLayout linearLayoutpre;
     LinearLayout linearLayoutnext;
+    private int smallsizetextquestion ;
+    private int mediumsizetxtquestion;
+    private int largesizetxtquestion;
     Question[] mquestion = {
             new Question(R.string.question_australia, false),
             new Question(R.string.question_oceans, true),
@@ -57,13 +67,20 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.geoquiz);
         if (savedInstanceState != null) {
             mcurrentindex = savedInstanceState.getInt(CURRENTINDEX, 0);
             score = savedInstanceState.getInt(SCORE, 0);
             isAnswer = savedInstanceState.getBooleanArray(IS_ANSWER);
+            indexcheater = savedInstanceState.getInt(INDEXCHEATER,10);
+            mIscheater = savedInstanceState.getBoolean(M_IS_CHEATER,false);
+            smallsizetextquestion = savedInstanceState.getInt(SMALL_SIZE , 16);
+            mediumsizetxtquestion = savedInstanceState.getInt(MEDIUM_SIZE , 16);
+            largesizetxtquestion = savedInstanceState.getInt(LARGE_SIZE , 16);
         }
 
-        setContentView(R.layout.geoquiz);
+
         findview();
         setListener();
         setquestion();
@@ -72,6 +89,12 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         setVisibility();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setSizeQuestiionText();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -83,6 +106,14 @@ public class GeoQuiz_Activity extends AppCompatActivity {
             mIscheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT, false);
             indexcheater = data.getIntExtra(CheatActivity.EXTRA_MCURRENTINDEX , 10);
         }
+
+
+        if(requestCode == REQUEST_CODE_SETTING){
+            smallsizetextquestion = data.getIntExtra(SettingActivity.SMALL_SIZE,16);
+            mediumsizetxtquestion = data.getIntExtra(SettingActivity.MEDIUM_SIZE , 16) ;
+            largesizetxtquestion = data.getIntExtra(SettingActivity.LARGE_SIZE , 16);
+
+        }
     }
 
     @Override
@@ -91,6 +122,11 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         outState.putInt(CURRENTINDEX, mcurrentindex);
         outState.putInt(SCORE, score);
         outState.putBooleanArray(IS_ANSWER, isAnswer);
+        outState.putBoolean(M_IS_CHEATER,mIscheater);
+        outState.putInt(INDEXCHEATER,indexcheater);
+        outState.putInt(SMALL_SIZE, smallsizetextquestion);
+        outState.putInt(MEDIUM_SIZE, mediumsizetxtquestion);
+        outState.putInt(LARGE_SIZE, largesizetxtquestion);
     }
 
     private void setVisibility() {
@@ -124,8 +160,21 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         } else if (isAnswer[mcurrentindex] == true) {
             disableButton();
         }
+
         mtextviewQuestion.setText(questionId);
 
+    }
+
+    private void setSizeQuestiionText() {
+        if(smallsizetextquestion == 14){
+            mtextviewQuestion.setTextSize(14);
+        }
+            if(mediumsizetxtquestion == 18){
+            mtextviewQuestion.setTextSize(18);
+        }
+            if(largesizetxtquestion == 26){
+            mtextviewQuestion.setTextSize(26);
+        }
     }
 
     private void disableButton() {
@@ -224,6 +273,17 @@ public class GeoQuiz_Activity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_CHEAT);
             }
         });
+
+
+        btn_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GeoQuiz_Activity.this , SettingActivity.class);
+                startActivityForResult(intent , REQUEST_CODE_SETTING);
+
+
+            }
+        });
     }
 
     private void findview() {
@@ -240,6 +300,7 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         linearLayoutpre = (LinearLayout) this.findViewById(R.id.pre_layout);
         linearLayoutnext = (LinearLayout) this.findViewById(R.id.next_layout);
         btn_cheat = findViewById(R.id.cheat_btn);
+        btn_setting = findViewById(R.id.btn_setting);
     }
 
 
