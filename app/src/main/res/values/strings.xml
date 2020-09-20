@@ -21,4 +21,9 @@
     <string name="small_size">14sp</string>
     <string name="medium_size">18sp</string>
     <string name="large_size">26sp</string>
+    <string name="change_background">تغییر رنگ پشت زمینه</string>
+    <string name="red">قرمز روشن</string>
+    <string name="blue">آبی روشن</string>
+    <string name="green">سبز روشن</string>
+    <string name="white">سفید</string>
 </resources>

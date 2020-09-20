@@ -51,9 +51,14 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     LinearLayout linearLayout;
     LinearLayout linearLayoutpre;
     LinearLayout linearLayoutnext;
+    LinearLayout linearLayoutmtxtquestion;
     private int smallsizetextquestion ;
     private int mediumsizetxtquestion;
     private int largesizetxtquestion;
+    private  int blue;
+    private int red;
+    private int green;
+    private int white;
     Question[] mquestion = {
             new Question(R.string.question_australia, false),
             new Question(R.string.question_oceans, true),
@@ -94,6 +99,22 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setSizeQuestiionText();
+        setColorofbackground();
+    }
+
+    private void setColorofbackground() {
+        if(red == 3){
+            linearLayoutmtxtquestion.setBackgroundColor(Color.RED);
+        }
+        if(green == 2){
+            linearLayoutmtxtquestion.setBackgroundColor(Color.GREEN);
+        }
+        if(blue == 1){
+            linearLayoutmtxtquestion.setBackgroundColor(Color.BLUE);
+        }
+        if(white == 4){
+            linearLayoutmtxtquestion.setBackgroundColor(Color.WHITE);
+        }
     }
 
     @Override
@@ -112,6 +133,10 @@ public class GeoQuiz_Activity extends AppCompatActivity {
             smallsizetextquestion = data.getIntExtra(SettingActivity.SMALL_SIZE,16);
             mediumsizetxtquestion = data.getIntExtra(SettingActivity.MEDIUM_SIZE , 16) ;
             largesizetxtquestion = data.getIntExtra(SettingActivity.LARGE_SIZE , 16);
+            white = data.getIntExtra(SettingActivity.WHITE , 0) ;
+            red = data.getIntExtra(SettingActivity.LIGHT_RED , 0);
+            blue = data.getIntExtra(SettingActivity.LIGHT_BLUE , 0);
+            green = data.getIntExtra(SettingActivity.LIGHT_GREEN , 0);
 
         }
     }
@@ -127,6 +152,7 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         outState.putInt(SMALL_SIZE, smallsizetextquestion);
         outState.putInt(MEDIUM_SIZE, mediumsizetxtquestion);
         outState.putInt(LARGE_SIZE, largesizetxtquestion);
+
     }
 
     private void setVisibility() {
@@ -299,6 +325,7 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         linearLayout = (LinearLayout) this.findViewById(R.id.hideUI);
         linearLayoutpre = (LinearLayout) this.findViewById(R.id.pre_layout);
         linearLayoutnext = (LinearLayout) this.findViewById(R.id.next_layout);
+        linearLayoutmtxtquestion = findViewById(R.id.mtext_Question);
         btn_cheat = findViewById(R.id.cheat_btn);
         btn_setting = findViewById(R.id.btn_setting);
     }
