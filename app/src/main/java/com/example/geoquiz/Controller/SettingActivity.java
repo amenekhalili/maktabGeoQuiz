@@ -1,5 +1,6 @@
 package com.example.geoquiz.Controller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,6 +14,10 @@ import com.example.geoquiz.R;
 public class SettingActivity extends AppCompatActivity {
     public static final String COLOROFBACKGROUND = "colorofbackground";
     public static final String SIZEOFTEXTQUESTION = "sizeoftextquestion";
+    public static final String COLOE_BACKGROUND = "coloeBackground";
+    public static final String SIZE_QUESTION = "sizeQuestion";
+    public static final String FLAG_SIZE = "flag_size";
+    public static final String FLAG_COLOR = "flag_color";
     private Button btn_changeQuestionSize;
     private Button btn_smallsize;
     private Button btn_mediumsize;
@@ -26,11 +31,20 @@ public class SettingActivity extends AppCompatActivity {
     private int colorofbackground;
     LinearLayout linearLayoutchangequestion ;
     LinearLayout linearLayoutchangebackground;
+    private boolean flagsize = false;
+    private boolean flagcolor = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_activity);
+
+        if(savedInstanceState != null){
+            sizeoftextquestion = savedInstanceState.getInt(SIZE_QUESTION , 16);
+            colorofbackground = savedInstanceState.getInt(COLOE_BACKGROUND , 4);
+            flagsize = savedInstanceState.getBoolean(FLAG_SIZE , false);
+            flagcolor = savedInstanceState.getBoolean(FLAG_COLOR , false);
+        }
 
         findview();
         setlistener();
@@ -39,13 +53,34 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(flagsize == true){
+            linearLayoutchangequestion.setVisibility(LinearLayout.VISIBLE);
+            setAlldata();
+        }
+        if(flagcolor == true){
+            linearLayoutchangebackground.setVisibility(LinearLayout.VISIBLE);
+            setAlldata();
+        }
+    }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SIZE_QUESTION, sizeoftextquestion);
+        outState.putInt(COLOE_BACKGROUND, colorofbackground);
+        outState.putBoolean(FLAG_SIZE, flagsize);
+        outState.putBoolean(FLAG_COLOR, flagcolor);
+    }
 
     private void setlistener() {
         btn_changeQuestionSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 linearLayoutchangequestion.setVisibility(LinearLayout.VISIBLE);
+                flagsize = true;
             }
         });
 
@@ -78,6 +113,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 linearLayoutchangebackground.setVisibility(LinearLayout.VISIBLE);
+                flagcolor = true;
             }
         });
 
