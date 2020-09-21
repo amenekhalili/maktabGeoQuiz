@@ -18,12 +18,14 @@
     <string name="judgment">تقلب کار بدی است</string>
     <string name="btn_setting">"تنظیمات   "</string>
     <string name="change_question_size">تغییر سایز سوال ها</string>
-    <string name="small_size">14sp</string>
-    <string name="medium_size">18sp</string>
-    <string name="large_size">26sp</string>
+    <string name="small_size">کوچک</string>
+    <string name="medium_size">متوسط</string>
+    <string name="large_size">بزرگ</string>
     <string name="change_background">تغییر رنگ پشت زمینه</string>
     <string name="red">قرمز روشن</string>
     <string name="blue">آبی روشن</string>
     <string name="green">سبز روشن</string>
     <string name="white">سفید</string>
+    <string name="svaebutton">ذخیره ی تغییرات</string>
+    <string name="discardbutton">بازگشت</string>
 </resources>

@@ -33,6 +33,8 @@ public class SettingActivity extends AppCompatActivity {
     LinearLayout linearLayoutchangebackground;
     private boolean flagsize = false;
     private boolean flagcolor = false;
+    private Button btn_save;
+    private Button btn_discard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +60,11 @@ public class SettingActivity extends AppCompatActivity {
         super.onResume();
         if(flagsize == true){
             linearLayoutchangequestion.setVisibility(LinearLayout.VISIBLE);
-            setAlldata();
+
         }
         if(flagcolor == true){
             linearLayoutchangebackground.setVisibility(LinearLayout.VISIBLE);
-            setAlldata();
+
         }
     }
 
@@ -88,7 +90,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sizeoftextquestion = 14;
-                setAlldata();
+
             }
         });
 
@@ -97,7 +99,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sizeoftextquestion = 18;
-                setAlldata();
+
             }
         });
 
@@ -105,7 +107,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sizeoftextquestion = 26;
-                setAlldata();
+
             }
         });
 
@@ -121,7 +123,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorofbackground = 1;
-                setAlldata();
+
             }
         });
 
@@ -129,7 +131,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorofbackground = 2;
-                setAlldata();
+
             }
         });
 
@@ -137,7 +139,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorofbackground = 3;
-                setAlldata();
+
             }
         });
 
@@ -145,9 +147,23 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorofbackground = 4;
-                setAlldata();
+
             }
         });
+           btn_save.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   setAlldata();
+                   finish();
+               }
+           });
+
+           btn_discard.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   finish();
+               }
+           });
 
     }
 
@@ -171,6 +187,7 @@ public class SettingActivity extends AppCompatActivity {
         btn_lightgreen  = findViewById(R.id.btn_lightgreen);
         btn_white = findViewById(R.id.btn_white);
         btn_changebackgroundcolor = findViewById(R.id.btn_chnagebackground);
-
+        btn_save = findViewById(R.id.btn_save);
+        btn_discard = findViewById(R.id.btn_discard);
     }
 }
