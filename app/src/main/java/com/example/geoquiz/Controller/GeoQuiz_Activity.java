@@ -3,6 +3,7 @@ package com.example.geoquiz.Controller;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,13 +11,18 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.geoquiz.Model.Question;
 import com.example.geoquiz.R;
+
+import static com.example.geoquiz.Controller.SettingActivity.COLOROFBACKGROUND;
+import static com.example.geoquiz.Controller.SettingActivity.SIZEOFTEXTQUESTION;
 
 public class GeoQuiz_Activity extends AppCompatActivity {
     private static final String CURRENTINDEX = "currentindex";
@@ -28,9 +34,8 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     public static final String M_IS_CHEATER = "mIsCheater";
     public static final String INDEXCHEATER = "indexcheater";
     public static final int REQUEST_CODE_SETTING = 1;
-    public static final String SMALL_SIZE = "small_size";
-    public static final String MEDIUM_SIZE = "medium_size";
-    public static final String LARGE_SIZE = "large_size";
+    private int sizeoftextQuestion;
+    private int colorofbackground;
     private Button btn_true;
     private Button btn_false;
     private ImageButton btn_next;
@@ -52,13 +57,8 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     LinearLayout linearLayoutpre;
     LinearLayout linearLayoutnext;
     LinearLayout linearLayoutmtxtquestion;
-    private int smallsizetextquestion ;
-    private int mediumsizetxtquestion;
-    private int largesizetxtquestion;
-    private  int blue;
-    private int red;
-    private int green;
-    private int white;
+    FrameLayout frameLayoutmtxtquestion;
+
     Question[] mquestion = {
             new Question(R.string.question_australia, false),
             new Question(R.string.question_oceans, true),
@@ -78,11 +78,11 @@ public class GeoQuiz_Activity extends AppCompatActivity {
             mcurrentindex = savedInstanceState.getInt(CURRENTINDEX, 0);
             score = savedInstanceState.getInt(SCORE, 0);
             isAnswer = savedInstanceState.getBooleanArray(IS_ANSWER);
-            indexcheater = savedInstanceState.getInt(INDEXCHEATER,10);
-            mIscheater = savedInstanceState.getBoolean(M_IS_CHEATER,false);
-            smallsizetextquestion = savedInstanceState.getInt(SMALL_SIZE , 16);
-            mediumsizetxtquestion = savedInstanceState.getInt(MEDIUM_SIZE , 16);
-            largesizetxtquestion = savedInstanceState.getInt(LARGE_SIZE , 16);
+            indexcheater = savedInstanceState.getInt(INDEXCHEATER, 10);
+            mIscheater = savedInstanceState.getBoolean(M_IS_CHEATER, false);
+            sizeoftextQuestion = savedInstanceState.getInt(SIZEOFTEXTQUESTION, 16);
+            colorofbackground = savedInstanceState.getInt(COLOROFBACKGROUND, 0);
+
         }
 
 
@@ -103,18 +103,36 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     }
 
     private void setColorofbackground() {
-        if(red == 3){
-            linearLayoutmtxtquestion.setBackgroundColor(Color.RED);
+
+        if(linearLayoutmtxtquestion != null){
+            if (colorofbackground == 3) {
+                linearLayoutmtxtquestion.setBackgroundColor(Color.RED);
+            }
+            if (colorofbackground == 2) {
+                linearLayoutmtxtquestion.setBackgroundColor(Color.GREEN);
+            }
+            if (colorofbackground == 1) {
+                linearLayoutmtxtquestion.setBackgroundColor(Color.BLUE);
+            }
+            if (colorofbackground == 4) {
+                linearLayoutmtxtquestion.setBackgroundColor(Color.WHITE);
+            }
         }
-        if(green == 2){
-            linearLayoutmtxtquestion.setBackgroundColor(Color.GREEN);
+        if(frameLayoutmtxtquestion != null){
+            if (colorofbackground == 3) {
+                frameLayoutmtxtquestion.setBackgroundColor(Color.RED);
+            }
+            if (colorofbackground == 2) {
+               frameLayoutmtxtquestion.setBackgroundColor(Color.GREEN);
+            }
+            if (colorofbackground == 1) {
+               frameLayoutmtxtquestion.setBackgroundColor(Color.BLUE);
+            }
+            if (colorofbackground == 4) {
+               frameLayoutmtxtquestion.setBackgroundColor(Color.WHITE);
+            }
         }
-        if(blue == 1){
-            linearLayoutmtxtquestion.setBackgroundColor(Color.BLUE);
-        }
-        if(white == 4){
-            linearLayoutmtxtquestion.setBackgroundColor(Color.WHITE);
-        }
+
     }
 
     @Override
@@ -125,19 +143,13 @@ public class GeoQuiz_Activity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_CHEAT) {
             mIscheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT, false);
-            indexcheater = data.getIntExtra(CheatActivity.EXTRA_MCURRENTINDEX , 10);
+            indexcheater = data.getIntExtra(CheatActivity.EXTRA_MCURRENTINDEX, 10);
         }
 
 
-        if(requestCode == REQUEST_CODE_SETTING){
-            smallsizetextquestion = data.getIntExtra(SettingActivity.SMALL_SIZE,16);
-            mediumsizetxtquestion = data.getIntExtra(SettingActivity.MEDIUM_SIZE , 16) ;
-            largesizetxtquestion = data.getIntExtra(SettingActivity.LARGE_SIZE , 16);
-            white = data.getIntExtra(SettingActivity.WHITE , 0) ;
-            red = data.getIntExtra(SettingActivity.LIGHT_RED , 0);
-            blue = data.getIntExtra(SettingActivity.LIGHT_BLUE , 0);
-            green = data.getIntExtra(SettingActivity.LIGHT_GREEN , 0);
-
+        if (requestCode == REQUEST_CODE_SETTING) {
+            sizeoftextQuestion = data.getIntExtra(SIZEOFTEXTQUESTION, 16);
+            colorofbackground = data.getIntExtra(COLOROFBACKGROUND, 0);
         }
     }
 
@@ -147,11 +159,11 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         outState.putInt(CURRENTINDEX, mcurrentindex);
         outState.putInt(SCORE, score);
         outState.putBooleanArray(IS_ANSWER, isAnswer);
-        outState.putBoolean(M_IS_CHEATER,mIscheater);
-        outState.putInt(INDEXCHEATER,indexcheater);
-        outState.putInt(SMALL_SIZE, smallsizetextquestion);
-        outState.putInt(MEDIUM_SIZE, mediumsizetxtquestion);
-        outState.putInt(LARGE_SIZE, largesizetxtquestion);
+        outState.putBoolean(M_IS_CHEATER, mIscheater);
+        outState.putInt(INDEXCHEATER, indexcheater);
+        outState.putInt(SIZEOFTEXTQUESTION, sizeoftextQuestion);
+        outState.putInt(COLOROFBACKGROUND, colorofbackground);
+
 
     }
 
@@ -192,13 +204,13 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     }
 
     private void setSizeQuestiionText() {
-        if(smallsizetextquestion == 14){
+        if (sizeoftextQuestion == 14) {
             mtextviewQuestion.setTextSize(14);
         }
-            if(mediumsizetxtquestion == 18){
+        if (sizeoftextQuestion == 18) {
             mtextviewQuestion.setTextSize(18);
         }
-            if(largesizetxtquestion == 26){
+        if (sizeoftextQuestion == 26) {
             mtextviewQuestion.setTextSize(26);
         }
     }
@@ -304,8 +316,8 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         btn_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GeoQuiz_Activity.this , SettingActivity.class);
-                startActivityForResult(intent , REQUEST_CODE_SETTING);
+                Intent intent = new Intent(GeoQuiz_Activity.this, SettingActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_SETTING);
 
 
             }
@@ -325,9 +337,10 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         linearLayout = (LinearLayout) this.findViewById(R.id.hideUI);
         linearLayoutpre = (LinearLayout) this.findViewById(R.id.pre_layout);
         linearLayoutnext = (LinearLayout) this.findViewById(R.id.next_layout);
-        linearLayoutmtxtquestion = findViewById(R.id.mtext_Question);
+        linearLayoutmtxtquestion = findViewById(R.id.layout_txtquestion);
         btn_cheat = findViewById(R.id.cheat_btn);
         btn_setting = findViewById(R.id.btn_setting);
+        frameLayoutmtxtquestion = findViewById(R.id.frame_txtquestion);
     }
 
 
@@ -356,8 +369,8 @@ public class GeoQuiz_Activity extends AppCompatActivity {
             }
 
 
-        } else{
-            if (mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed  ) {
+        } else {
+            if (mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed) {
                 score++;
                 makestr();
                 textViewtrue.setText(R.string.true_message);
@@ -372,7 +385,7 @@ public class GeoQuiz_Activity extends AppCompatActivity {
                 isAnswer[mcurrentindex] = true;
                 disableButton();
                 setVisibility();
-            } else if(mquestion[mcurrentindex].ismIsAnswerTrue() != userpressed){
+            } else if (mquestion[mcurrentindex].ismIsAnswerTrue() != userpressed) {
                 makestr();
                 textViewfalse.setText(R.string.false_message);
                 textViewfalse.setTextColor(Color.RED);

@@ -11,17 +11,8 @@ import android.widget.LinearLayout;
 import com.example.geoquiz.R;
 
 public class SettingActivity extends AppCompatActivity {
-    public static final String SMALL_SIZE = "small_size";
-    public static final String MEDIUM_SIZE = "medium_size";
-    public static final String LARGE_SIZE = "large_size";
-    public static final String LIGHT_GREEN = "light_green";
-    public static final String LIGHT_BLUE = "light_blue";
-    public static final String WHITE = "white";
-    public static final String LIGHT_RED = "light_red";
-    public static final int lightblue = 1;
-    public static final int lightgreen = 2;
-    public static final int lightred = 3;
-    public static final int White = 4;
+    public static final String COLOROFBACKGROUND = "colorofbackground";
+    public static final String SIZEOFTEXTQUESTION = "sizeoftextquestion";
     private Button btn_changeQuestionSize;
     private Button btn_smallsize;
     private Button btn_mediumsize;
@@ -31,9 +22,8 @@ public class SettingActivity extends AppCompatActivity {
     private Button btn_lightred;
     private Button btn_lightgreen;
     private Button btn_white;
-
-
-
+    private int sizeoftextquestion;
+    private int colorofbackground;
     LinearLayout linearLayoutchangequestion ;
     LinearLayout linearLayoutchangebackground;
 
@@ -62,9 +52,8 @@ public class SettingActivity extends AppCompatActivity {
         btn_smallsize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(SMALL_SIZE, 14);
-                setResult(RESULT_OK, intent);
+                sizeoftextquestion = 14;
+                setAlldata();
             }
         });
 
@@ -72,67 +61,66 @@ public class SettingActivity extends AppCompatActivity {
         btn_mediumsize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(MEDIUM_SIZE,18);
-                setResult(RESULT_OK , intent);
+                sizeoftextquestion = 18;
+                setAlldata();
             }
         });
 
         btn_largesize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(LARGE_SIZE, 26);
-                setResult(RESULT_OK , intent);
+                sizeoftextquestion = 26;
+                setAlldata();
             }
         });
 
-      btn_changebackgroundcolor.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              linearLayoutchangebackground.setVisibility(LinearLayout.VISIBLE);
-          }
-      });
+        btn_changebackgroundcolor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linearLayoutchangebackground.setVisibility(LinearLayout.VISIBLE);
+            }
+        });
 
-      btn_lightblue.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent();
-              intent.putExtra(LIGHT_BLUE, lightblue) ;
-              setResult(RESULT_OK , intent);
+        btn_lightblue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorofbackground = 1;
+                setAlldata();
+            }
+        });
 
-          }
-      });
+        btn_lightgreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorofbackground = 2;
+                setAlldata();
+            }
+        });
 
-      btn_lightgreen.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent();
-              intent.putExtra(LIGHT_GREEN , lightgreen);
-              setResult(RESULT_OK , intent);
-          }
-      });
+        btn_lightred.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorofbackground = 3;
+                setAlldata();
+            }
+        });
 
-      btn_lightred.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent();
-              intent.putExtra(LIGHT_RED, lightred);
-              setResult(RESULT_OK , intent);
-          }
-      });
-
-      btn_white.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent();
-              intent.putExtra(WHITE, White);
-              setResult(RESULT_OK , intent);
-          }
-      });
+        btn_white.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorofbackground = 4;
+                setAlldata();
+            }
+        });
 
     }
 
+   private void  setAlldata(){
+        Intent intent = new Intent();
+        intent.putExtra(COLOROFBACKGROUND, colorofbackground);
+        intent.putExtra(SIZEOFTEXTQUESTION, sizeoftextquestion);
+        setResult(RESULT_OK , intent);
+   }
 
     private void findview() {
 
