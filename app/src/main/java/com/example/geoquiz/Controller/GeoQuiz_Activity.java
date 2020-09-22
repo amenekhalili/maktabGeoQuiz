@@ -2,11 +2,13 @@ package com.example.geoquiz.Controller;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -102,20 +104,21 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         setColorofbackground();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void setColorofbackground() {
 
         if(linearLayoutmtxtquestion != null){
             if (colorofbackground == 3) {
-                linearLayoutmtxtquestion.setBackgroundColor(Color.RED);
+                linearLayoutmtxtquestion.setBackgroundColor(getColor(R.color.lightRed));
             }
             if (colorofbackground == 2) {
-                linearLayoutmtxtquestion.setBackgroundColor(Color.GREEN);
+                linearLayoutmtxtquestion.setBackgroundColor(getColor(R.color.lightGreen));
             }
             if (colorofbackground == 1) {
-                linearLayoutmtxtquestion.setBackgroundColor(Color.BLUE);
+                linearLayoutmtxtquestion.setBackgroundColor(getColor(R.color.lightBlue));
             }
             if (colorofbackground == 4) {
-                linearLayoutmtxtquestion.setBackgroundColor(Color.WHITE);
+                linearLayoutmtxtquestion.setBackgroundColor(getColor(R.color.White));
             }
         }
         if(frameLayoutmtxtquestion != null){
