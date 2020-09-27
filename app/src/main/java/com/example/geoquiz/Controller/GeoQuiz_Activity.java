@@ -13,6 +13,8 @@ public class GeoQuiz_Activity extends AppCompatActivity {
     public static final String EXTRA_QUESTION_A_NSWER = " com.example.geoquiz.Question_Answer";
     public static final String EXTRA_MCURRENTINDEX = "com.example.geoquiz.mcurrentindex";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

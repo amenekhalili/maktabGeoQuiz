@@ -13,6 +13,7 @@ import com.example.geoquiz.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,13 +32,15 @@ import com.example.geoquiz.Model.Question;
 
 
 import static androidx.core.content.ContextCompat.getColor;
+
+
 import static com.example.geoquiz.Controller.SettingActivity.COLOROFBACKGROUND;
 import static com.example.geoquiz.Controller.SettingActivity.SIZEOFTEXTQUESTION;
 
 
 public class GeoQuiz_Fragment extends Fragment {
     private static final String CURRENTINDEX = "currentindex";
-    private static final String IS_ANSWER = "isAnswer";
+
     private static final String SCORE = "score";
     public static final String EXTRA_QUESTION_A_NSWER = " com.example.geoquiz.Question_Answer";
     private static final int REQUEST_CODE_CHEAT = 0;
@@ -45,6 +48,8 @@ public class GeoQuiz_Fragment extends Fragment {
     public static final String M_IS_CHEATER = "mIsCheater";
     public static final String INDEXCHEATER = "indexcheater";
     public static final int REQUEST_CODE_SETTING = 1;
+    private static final String EXTRA_IS_CHEAT ="is_cheat";
+    public static final String ISANSWER = "isanswer";
     private int sizeoftextQuestion;
     private int colorofbackground;
     private Button btn_true;
@@ -85,10 +90,11 @@ public class GeoQuiz_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (savedInstanceState != null) {
             mcurrentindex = savedInstanceState.getInt(CURRENTINDEX, 0);
             score = savedInstanceState.getInt(SCORE, 0);
-            isAnswer = savedInstanceState.getBooleanArray(IS_ANSWER);
+            isAnswer = savedInstanceState.getBooleanArray(ISANSWER);
             indexcheater = savedInstanceState.getInt(INDEXCHEATER, 10);
             mIscheater = savedInstanceState.getBoolean(M_IS_CHEATER, false);
             sizeoftextQuestion = savedInstanceState.getInt(SIZEOFTEXTQUESTION, 16);
@@ -102,6 +108,16 @@ public class GeoQuiz_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_geo_quiz_, container, false);
 
+
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            mIscheater = bundle.getBoolean(EXTRA_IS_CHEAT , false);
+           indexcheater = bundle.getInt(EXTRA_MCURRENTINDEX , 10);
+           mcurrentindex = bundle.getInt(EXTRA_MCURRENTINDEX , 10);
+           score = bundle.getInt(SCORE , score);
+           isAnswer = bundle.getBooleanArray(ISANSWER);
+        }
+
         findview(view);
         setListener(view);
         setquestion(view);
@@ -109,8 +125,12 @@ public class GeoQuiz_Fragment extends Fragment {
         setScore(str);
         setVisibility(view);
 
+
+
         return view;
     }
+
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -144,17 +164,13 @@ public class GeoQuiz_Fragment extends Fragment {
 
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK || data == null)
             return;
-
-        if (requestCode == REQUEST_CODE_CHEAT) {
-            mIscheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT, false);
-            indexcheater = data.getIntExtra(CheatActivity.EXTRA_MCURRENTINDEX, 10);
-        }
-
 
         if (requestCode == REQUEST_CODE_SETTING) {
             sizeoftextQuestion = data.getIntExtra(SIZEOFTEXTQUESTION, 16);
@@ -167,7 +183,7 @@ public class GeoQuiz_Fragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENTINDEX, mcurrentindex);
         outState.putInt(SCORE, score);
-        outState.putBooleanArray(IS_ANSWER, isAnswer);
+        outState.putBooleanArray(ISANSWER, isAnswer);
         outState.putBoolean(M_IS_CHEATER, mIscheater);
         outState.putInt(INDEXCHEATER, indexcheater);
         outState.putInt(SIZEOFTEXTQUESTION, sizeoftextQuestion);
@@ -315,10 +331,26 @@ public class GeoQuiz_Fragment extends Fragment {
         btn_cheat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CheatActivity.class);
+
+               /* Intent intent = new Intent(getActivity(), CheatActivity.class);
                 intent.putExtra(EXTRA_QUESTION_A_NSWER, mquestion[mcurrentindex].ismIsAnswerTrue());
                 intent.putExtra(EXTRA_MCURRENTINDEX, mcurrentindex);
-                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);*/
+
+               Bundle bundle = new Bundle();
+               bundle.putBoolean(EXTRA_QUESTION_A_NSWER , mquestion[mcurrentindex].ismIsAnswerTrue());
+               bundle.putInt(EXTRA_MCURRENTINDEX , mcurrentindex);
+               bundle.putInt(SCORE , score);
+               bundle.putBooleanArray(ISANSWER, isAnswer);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+               Cheat_Fragment cheat_fragment = new Cheat_Fragment();
+               cheat_fragment.setArguments(bundle);
+               fragmentManager.beginTransaction()
+                       .replace(R.id.container_QeoQuiz_fragment , cheat_fragment)
+                       .commit();
+
+
             }
         });
 
@@ -369,6 +401,7 @@ public class GeoQuiz_Fragment extends Fragment {
         final Toast toastcheat = new Toast(getContext());
         final TextView textViewcheat = new TextView(getActivity());
         final LinearLayout layoutcheat = new LinearLayout(getActivity());
+
         if (mIscheater && indexcheater == mcurrentindex) {
 
        textViewcheat.setText(R.string.judgment);
