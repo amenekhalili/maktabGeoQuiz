@@ -2,13 +2,21 @@ package com.example.geoquiz.Model;
 
 import androidx.core.app.ComponentActivity;
 
+import java.util.UUID;
+
 public class Question {
     private int mQuestiontextResId;
     private boolean mIsAnswerTrue;
+    private UUID mUUID;
+
+    public UUID getUUID() {
+        return mUUID;
+    }
 
     public Question(int mQuestiontextResId, boolean mIsAnswerTrue) {
         this.mQuestiontextResId = mQuestiontextResId;
         this.mIsAnswerTrue = mIsAnswerTrue;
+        mUUID = UUID.randomUUID();
     }
 
     public Question() {

@@ -8,7 +8,7 @@
     android:layout_gravity="top"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Controller.GeoQuiz_Activity"
+    tools:context=".Controller.Activity.GeoQuiz_Activity"
 
     >
 

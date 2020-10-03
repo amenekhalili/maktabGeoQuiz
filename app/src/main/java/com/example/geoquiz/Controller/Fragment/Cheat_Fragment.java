@@ -1,6 +1,5 @@
-package com.example.geoquiz.Controller;
+package com.example.geoquiz.Controller.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,11 +14,9 @@ import android.widget.TextView;
 
 import com.example.geoquiz.R;
 
-import static android.app.Activity.RESULT_OK;
-import static android.os.SystemClock.sleep;
-import static com.example.geoquiz.Controller.GeoQuiz_Fragment.EXTRA_MCURRENTINDEX;
-import static com.example.geoquiz.Controller.GeoQuiz_Fragment.EXTRA_QUESTION_A_NSWER;
-import static com.example.geoquiz.Controller.GeoQuiz_Fragment.ISANSWER;
+import static com.example.geoquiz.Controller.Fragment.GeoQuiz_Fragment.EXTRA_MCURRENTINDEX;
+import static com.example.geoquiz.Controller.Fragment.GeoQuiz_Fragment.EXTRA_QUESTION_A_NSWER;
+import static com.example.geoquiz.Controller.Fragment.GeoQuiz_Fragment.ISANSWER;
 
 public class Cheat_Fragment extends Fragment {
 
@@ -119,7 +116,7 @@ public class Cheat_Fragment extends Fragment {
             bundle.putBoolean(EXTRA_IS_CHEAT ,ischeat);
             bundle.putInt(Score , score);
             bundle.putBooleanArray(ISANSWER , isAnswer);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             GeoQuiz_Fragment geoQuiz_fragment = new GeoQuiz_Fragment();
             geoQuiz_fragment.setArguments(bundle);
 

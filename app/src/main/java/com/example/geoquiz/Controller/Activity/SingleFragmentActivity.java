@@ -1,5 +1,4 @@
-package com.example.geoquiz.Controller;
-
+package com.example.geoquiz.Controller.Activity;
 
 import android.os.Bundle;
 
@@ -7,13 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.geoquiz.Controller.Fragment.GeoQuiz_Fragment;
 import com.example.geoquiz.R;
 
-public class GeoQuiz_Activity extends AppCompatActivity {
-    public static final String EXTRA_QUESTION_A_NSWER = " com.example.geoquiz.Question_Answer";
-    public static final String EXTRA_MCURRENTINDEX = "com.example.geoquiz.mcurrentindex";
-
-
+public abstract class SingleFragmentActivity extends AppCompatActivity {
+    public abstract Fragment CreateFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +22,14 @@ public class GeoQuiz_Activity extends AppCompatActivity {
         Fragment fragment = fragmentManager.findFragmentById(R.id.container_QeoQuiz_fragment);
 
         if(fragment == null){
-            GeoQuiz_Fragment geoQuiz_fragment = new GeoQuiz_Fragment();
+
             fragmentManager.beginTransaction()
-                    .add(R.id.container_QeoQuiz_fragment ,geoQuiz_fragment )
+                    .add(R.id.container_QeoQuiz_fragment ,CreateFragment() )
                     .commit();
         }
 
 
 
     }
-
-
-
 
 }

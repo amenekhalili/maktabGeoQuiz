@@ -1,4 +1,4 @@
-package com.example.geoquiz.Controller;
+package com.example.geoquiz.Controller.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
