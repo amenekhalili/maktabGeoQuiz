@@ -82,11 +82,11 @@ public class GeoQuiz_Fragment<list> extends Fragment {
     FrameLayout frameLayoutmtxtquestion;
     UUID id;
 
-    boolean[] isAnswer = {false, false, false, false, false, false};
+    boolean[] isAnswer = {false, false, false, false, false, false , false, false, false, false, false, false};
 
 
     List<Question> itemList = new ArrayList<Question>();
-    Question[] Arr = new Question[10];
+    Question[] Arr = new Question[20];
 
 
     @Override
@@ -471,7 +471,7 @@ public class GeoQuiz_Fragment<list> extends Fragment {
                 isAnswer[mcurrentindex] = true;
                 disableButton();
                 setVisibility(view);
-            } else if (Arr[mcurrentindex - 1].ismIsAnswerTrue() != userpressed) {
+            } else if (Arr[mcurrentindex ].ismIsAnswerTrue() != userpressed) {
                 makestr();
                 textViewfalse.setText(R.string.false_message);
                 textViewfalse.setTextColor(Color.RED);

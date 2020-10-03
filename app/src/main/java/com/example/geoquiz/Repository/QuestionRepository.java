@@ -32,6 +32,12 @@ public class QuestionRepository {
         Question question4 = new Question(R.string.question_africa, true);
         Question question5 = new Question(R.string.question_americas, false);
         Question question6 = new Question(R.string.question_asia, false);
+        Question question7 = new Question(R.string.question_australia, false);
+        Question question8 = new Question(R.string.question_oceans, true);
+        Question question9 = new Question(R.string.question_mideast, false);
+        Question question10 = new Question(R.string.question_africa, true);
+        Question question11 = new Question(R.string.question_americas, false);
+        Question question12 = new Question(R.string.question_asia, false);
 
         mQuestions.add(question1);
         mQuestions.add(question2);
@@ -39,6 +45,12 @@ public class QuestionRepository {
         mQuestions.add(question4);
         mQuestions.add(question5);
         mQuestions.add(question6);
+        mQuestions.add(question7);
+        mQuestions.add(question8);
+        mQuestions.add(question9);
+        mQuestions.add(question10);
+        mQuestions.add(question11);
+        mQuestions.add(question12);
 
 
     }
