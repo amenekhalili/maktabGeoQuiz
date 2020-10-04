@@ -11,6 +11,12 @@
     <string name="question_africa">مصر در قاره افریقا قرار دارد</string>
     <string name="question_americas">کشور امریکا پرجمعیت ترین کشور دنیا است</string>
     <string name="question_asia"> قاره ی  اسیا در نیم کره جنوبی جهان واقع شده است</string>
+    <string name="question_iran">تهران پایتخت ایران است</string>
+    <string name="question_german">کشور آلمان در قاره ی اروپا واقع شده است</string>
+   <string name="question_france">کشور فرانسه در قاره ی آسیا واقع شده است</string>
+    <string name="question_America">قاره ی آمریکا بزرگترین قاره ی جهان است</string>
+    <string name="question_lan">کشور ایران فارسی زبان هست</string>
+    <string name="question_iraq">رود فرات در عراق وجود دارد</string>
     <string name="score">امتیاز</string>
     <string name="cheat_btn">تقلب</string>
     <string name="show_cheat">نمایش تقلب</string>

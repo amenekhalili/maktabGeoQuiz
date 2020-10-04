@@ -32,12 +32,12 @@ public class QuestionRepository {
         Question question4 = new Question(R.string.question_africa, true);
         Question question5 = new Question(R.string.question_americas, false);
         Question question6 = new Question(R.string.question_asia, false);
-        Question question7 = new Question(R.string.question_australia, false);
-        Question question8 = new Question(R.string.question_oceans, true);
-        Question question9 = new Question(R.string.question_mideast, false);
-        Question question10 = new Question(R.string.question_africa, true);
-        Question question11 = new Question(R.string.question_americas, false);
-        Question question12 = new Question(R.string.question_asia, false);
+        Question question7 = new Question(R.string.question_iran , true);
+        Question question8 = new Question(R.string.question_german , true);
+        Question question9 = new Question(R.string.question_America , false);
+        Question question10 = new Question(R.string.question_france , false);
+        Question question11 = new Question(R.string.question_lan , true);
+        Question question12 = new Question(R.string.question_iraq , true);
 
         mQuestions.add(question1);
         mQuestions.add(question2);
