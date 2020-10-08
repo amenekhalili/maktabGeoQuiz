@@ -77,5 +77,24 @@ public class QuestionRepository {
         return null;
     }
 
+    public int getPosition(UUID id){
+        for (int i = 0; i <mQuestions.size() ; i++) {
+            if(mQuestions.get(i).getUUID().equals(id)){
+                return i;
+            }
 
+        }
+        return -1;
+    }
+
+    public Question getQuestion(int index) {
+        for (int i = 0; i < mQuestions.size() ; i++) {
+            return mQuestions.get(index);
+        }
+        return null;
+    }
+
+    public int QuestionSize(){
+        return mQuestions.size();
+    }
 }

@@ -1,26 +1,14 @@
 package com.example.geoquiz.Controller.Fragment;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.geoquiz.Controller.Activity.SettingActivity;
-import com.example.geoquiz.R;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -29,17 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.geoquiz.Controller.Activity.SettingActivity;
 import com.example.geoquiz.Model.Question;
+import com.example.geoquiz.R;
 import com.example.geoquiz.Repository.QuestionRepository;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static androidx.core.content.ContextCompat.getColor;
-
-
 import static com.example.geoquiz.Controller.Activity.SettingActivity.COLOROFBACKGROUND;
 import static com.example.geoquiz.Controller.Activity.SettingActivity.SIZEOFTEXTQUESTION;
 
@@ -65,7 +56,7 @@ public class GeoQuiz_Fragment<list> extends Fragment {
     private ImageButton btn_pre;
     private ImageButton btn_doublenext;
     private ImageButton btn_doublepre;
-    private int mcurrentindex = 0;
+    private int mcurrentindex;
     private TextView mtextviewQuestion;
     private int score = 0;
     private Button btn_score;
@@ -75,28 +66,26 @@ public class GeoQuiz_Fragment<list> extends Fragment {
     private boolean mIscheater;
     private int indexcheater;
     private Button btn_setting;
-    LinearLayout linearLayout;
-    LinearLayout linearLayoutpre;
-    LinearLayout linearLayoutnext;
-    LinearLayout linearLayoutmtxtquestion;
-    FrameLayout frameLayoutmtxtquestion;
-    UUID id;
-
-    boolean[] isAnswer = {false, false, false, false, false, false , false, false, false, false, false, false};
-
-
-    List<Question> itemList = new ArrayList<Question>();
-    Question[] Arr = new Question[20];
+    private LinearLayout linearLayout;
+    private LinearLayout linearLayoutpre;
+    private LinearLayout linearLayoutnext;
+    private LinearLayout linearLayoutmtxtquestion;
+    private FrameLayout frameLayoutmtxtquestion;
+    private UUID id;
+    private Question mQuestion;
+    QuestionRepository questionRepository = QuestionRepository.getInstance();
+    private final int size = questionRepository.QuestionSize();
+    private boolean[] isAnswer = new boolean[size];
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        for (int i = 0; i < isAnswer.length; i++) {
+            isAnswer[i] = false;
+        }
 
         getIdandsetit();
-
-        makeArraylist();
 
 
         if (savedInstanceState != null) {
@@ -113,23 +102,11 @@ public class GeoQuiz_Fragment<list> extends Fragment {
     }
 
     private void getIdandsetit() {
-        QuestionRepository questionRepository = QuestionRepository.getInstance();
-
         id = (UUID) getActivity().getIntent().getSerializableExtra(QuestionlistFragment.QUESTION_ID);
-        Arr[0] = questionRepository.getQuestion(id);
-        itemList.addAll(questionRepository.getQuestions());
+        mQuestion = questionRepository.getQuestion(id);
+        mcurrentindex = questionRepository.getPosition(id);
     }
 
-    private void makeArraylist() {
-        for (int i = 0; i <itemList.size() ; i++) {
-            Arr[i+1] = itemList.get(i);
-        }
-        for (int i = 1; i <Arr.length; i++) {
-            if(Arr[i] == Arr[0]){
-                Arr[i] = itemList.get(5);
-            }
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -241,14 +218,8 @@ public class GeoQuiz_Fragment<list> extends Fragment {
 
         btnreset.setVisibility(view.findViewById(R.id.btn_reset).INVISIBLE);
 
-       /* if(Arr[mcurrentindex].getUUID().equals(id)){
-            mcurrentindex = (  mcurrentindex + 2);
-        }*/
 
-        int questionId = Arr[mcurrentindex].getmQuestiontextResId();
-        // int questionId = QuestionRepository.getInstance().getQuestion(id).getmQuestiontextResId();
-        // int questionId = mQuestion.getmQuestiontextResId();
-
+        int questionId = questionRepository.getQuestion(mcurrentindex).getmQuestiontextResId();
 
         if (isAnswer[mcurrentindex] == false) {
             EnableButton();
@@ -290,6 +261,7 @@ public class GeoQuiz_Fragment<list> extends Fragment {
 
     private void setListener(final View view) {
 
+
         final View v = view;
         btn_true.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,7 +282,7 @@ public class GeoQuiz_Fragment<list> extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mcurrentindex = (mcurrentindex + 1) % itemList.size();
+                mcurrentindex = (mcurrentindex + 1) % size;
                 setquestion(view);
             }
         });
@@ -318,7 +290,7 @@ public class GeoQuiz_Fragment<list> extends Fragment {
         btn_pre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mcurrentindex = (mcurrentindex - 1 + itemList.size()) % itemList.size();
+                mcurrentindex = (mcurrentindex - 1 + size) % size;
                 setquestion(view);
             }
         });
@@ -363,18 +335,12 @@ public class GeoQuiz_Fragment<list> extends Fragment {
             @Override
             public void onClick(View v) {
 
-               /* Intent intent = new Intent(getActivity(), CheatActivity.class);
-                intent.putExtra(EXTRA_QUESTION_A_NSWER, mquestion[mcurrentindex].ismIsAnswerTrue());
-                intent.putExtra(EXTRA_MCURRENTINDEX, mcurrentindex);
-                startActivityForResult(intent, REQUEST_CODE_CHEAT);*/
 
                 Bundle bundle = new Bundle();
-                // bundle.putBoolean(EXTRA_QUESTION_A_NSWER , mquestion[mcurrentindex].ismIsAnswerTrue());
-                bundle.putBoolean(EXTRA_QUESTION_A_NSWER, Arr[mcurrentindex].ismIsAnswerTrue());
+                bundle.putBoolean(EXTRA_QUESTION_A_NSWER, questionRepository.getQuestion(mcurrentindex).ismIsAnswerTrue());
                 bundle.putInt(EXTRA_MCURRENTINDEX, mcurrentindex);
                 bundle.putInt(SCORE, score);
                 bundle.putBooleanArray(ISANSWER, isAnswer);
-
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 Cheat_Fragment cheat_fragment = new Cheat_Fragment();
                 cheat_fragment.setArguments(bundle);
@@ -445,8 +411,8 @@ public class GeoQuiz_Fragment<list> extends Fragment {
             isAnswer[mcurrentindex] = true;
             disableButton();
             setVisibility(view);
-            //   if (mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed) {
-            if (Arr[mcurrentindex].ismIsAnswerTrue() == userpressed) {
+
+            if (questionRepository.getQuestion(mcurrentindex).ismIsAnswerTrue() == userpressed) {
                 score++;
                 makestr();
             } else {
@@ -455,8 +421,7 @@ public class GeoQuiz_Fragment<list> extends Fragment {
 
 
         } else {
-            //if (mquestion[mcurrentindex].ismIsAnswerTrue() == userpressed) {
-            if (Arr[mcurrentindex].ismIsAnswerTrue() == userpressed) {
+            if (questionRepository.getQuestion(mcurrentindex).ismIsAnswerTrue() == userpressed) {
                 score++;
                 makestr();
                 textViewtrue.setText(R.string.true_message);
@@ -471,7 +436,7 @@ public class GeoQuiz_Fragment<list> extends Fragment {
                 isAnswer[mcurrentindex] = true;
                 disableButton();
                 setVisibility(view);
-            } else if (Arr[mcurrentindex ].ismIsAnswerTrue() != userpressed) {
+            } else if (questionRepository.getQuestion(mcurrentindex).ismIsAnswerTrue() != userpressed) {
                 makestr();
                 textViewfalse.setText(R.string.false_message);
                 textViewfalse.setTextColor(Color.RED);

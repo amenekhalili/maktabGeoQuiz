@@ -3,8 +3,8 @@
     <string name="question">تهران پایتخت ایران است</string>
     <string name="str_true">درست</string>
     <string name="str_false">نادرست</string>
-    <string name="true_message">پاسخ شما درست می باشد</string>
-    <string name="false_message">پاسخ شما نادرست می باشد</string>
+    <string name="true_message">  پاسخ شما درست می باشد </string>
+    <string name="false_message">  پاسخ شما نادرست می باشد </string>
     <string name="question_australia">استرالیا بزرگ ترین قاره جهان است</string>
     <string name="question_oceans">اقیانوس ارام بزرگ ترین اقیانوس جهان است</string>
     <string name="question_mideast">همه ی کشور های خاورمیانه عرب زبان هستند</string>

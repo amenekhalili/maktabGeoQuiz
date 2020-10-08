@@ -1,26 +1,24 @@
 package com.example.geoquiz.Controller.Fragment;
 
-        import android.content.Intent;
-        import android.os.Bundle;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
-        import androidx.annotation.NonNull;
-        import androidx.fragment.app.Fragment;
-        import androidx.recyclerview.widget.LinearLayoutManager;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.CheckBox;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import com.example.geoquiz.Controller.Activity.GeoQuiz_Activity;
+import com.example.geoquiz.Model.Question;
+import com.example.geoquiz.R;
+import com.example.geoquiz.Repository.QuestionRepository;
 
-        import com.example.geoquiz.Controller.Activity.GeoQuiz_Activity;
-        import com.example.geoquiz.Model.Question;
-        import com.example.geoquiz.R;
-        import com.example.geoquiz.Repository.QuestionRepository;
-
-        import java.util.List;
+import java.util.List;
 
 
 public class QuestionlistFragment extends Fragment {
@@ -49,17 +47,17 @@ public class QuestionlistFragment extends Fragment {
     private void initViews() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-      QuestionRepository questionRepository = QuestionRepository.getInstance();
-      List<Question> question = questionRepository.getQuestions();
-      QuestionAdapter questionAdapter = new QuestionAdapter(question);
-      mRecyclerView.setAdapter(questionAdapter);
+        QuestionRepository questionRepository = QuestionRepository.getInstance();
+        List<Question> question = questionRepository.getQuestions();
+        QuestionAdapter questionAdapter = new QuestionAdapter(question);
+        mRecyclerView.setAdapter(questionAdapter);
     }
 
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.Questionlist_recyvlerview);
     }
 
-    private class QuestionHolder extends RecyclerView.ViewHolder{
+    private class QuestionHolder extends RecyclerView.ViewHolder {
         private TextView mTextViewQuestionList;
         private CheckBox mCheckBoxAnswerList;
         private Question mQuestion;
@@ -71,22 +69,22 @@ public class QuestionlistFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-               Intent intent = new Intent(getActivity() , GeoQuiz_Activity.class);
-               intent.putExtra(QUESTION_ID, mQuestion.getUUID());
-               startActivity(intent);
+                    Intent intent = new Intent(getActivity(), GeoQuiz_Activity.class);
+                    intent.putExtra(QUESTION_ID, mQuestion.getUUID());
+                    startActivity(intent);
                 }
             });
         }
 
-     public void bindQuestion(Question question){
+        public void bindQuestion(Question question) {
             mQuestion = question;
             mTextViewQuestionList.setText(question.getmQuestiontextResId());
             mCheckBoxAnswerList.setChecked(question.ismIsAnswerTrue());
-     }
+        }
     }
 
 
-    private class QuestionAdapter extends RecyclerView.Adapter<QuestionHolder>{
+    private class QuestionAdapter extends RecyclerView.Adapter<QuestionHolder> {
         private List<Question> mQuestions;
 
         public List<Question> getQuestions() {
@@ -111,7 +109,7 @@ public class QuestionlistFragment extends Fragment {
         @Override
         public QuestionHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.question_row_list , parent , false);
+            View view = layoutInflater.inflate(R.layout.question_row_list, parent, false);
             QuestionHolder questionHolder = new QuestionHolder(view);
             return questionHolder;
         }
@@ -120,7 +118,7 @@ public class QuestionlistFragment extends Fragment {
         public void onBindViewHolder(@NonNull QuestionHolder holder, int position) {
             Question question = mQuestions.get(position);
 
-              holder.bindQuestion(question);
+            holder.bindQuestion(question);
 
         }
 
